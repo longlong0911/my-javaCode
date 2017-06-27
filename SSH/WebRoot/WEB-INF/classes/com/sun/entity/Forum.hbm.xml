@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	
+	<class name="com.sun.entity.Forum" table="sss_forum">
+		 <!-- 主键生成方式 -->
+		 <id name="id" column="id" type="java.lang.Long">
+			 <generator class="native">
+			 </generator>
+		 </id>
+		 <!-- 普通字段生成方式 -->
+		 <property name="name" type="java.lang.String" column="name"/>
+		 <property name="description" type="java.lang.String" column="description"/>
+		 <property name="position" type="java.lang.Integer" column="position"/>
+		
+		 <property name="topicCount" type="java.lang.Integer" column="topicCount"/>
+		<property name="articleCount" type="java.lang.Integer" column="articleCount"/>
+			
+		<set name="topics">
+			<key>
+				<column name="forumId"></column>
+			</key>
+			<one-to-many class="com.sun.entity.Topic"/>
+		</set>
+		<many-to-one name="lastTopic" class="com.sun.entity.Topic" column="lastTopicId" unique="true"/>
+		
+			 
+	</class>
+</hibernate-mapping>

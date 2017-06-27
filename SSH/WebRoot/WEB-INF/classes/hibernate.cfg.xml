@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+<session-factory>
+
+
+	<!-- SQL dialect  数据库方言 -->
+	<property name="dialect">
+		org.hibernate.dialect.OracleDialect
+	</property>
+
+	<!-- 自动生成sql打印到控制台 -->
+	<property name="show_sql">true</property>
+	<!-- 打印sql进行格式化 -->
+	<property name="format_sql">true</property>
+	<property name="hbm2ddl.auto">update</property>
+	<!-- 配置文件中关联映射文件 -->
+	<mapping resource="com/sun/entity/Department.hbm.xml" />
+	<mapping resource="com/sun/entity/Forum.hbm.xml" />
+	<mapping resource="com/sun/entity/Post.hbm.xml" />
+	<mapping resource="com/sun/entity/Privilege.hbm.xml" />
+	<mapping resource="com/sun/entity/Reply.hbm.xml" />
+	<mapping resource="com/sun/entity/Topic.hbm.xml" />
+	<mapping resource="com/sun/entity/User.hbm.xml" />
+
+</session-factory>
+</hibernate-configuration>

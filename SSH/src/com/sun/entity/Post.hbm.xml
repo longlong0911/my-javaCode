@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	
+	<class name="com.sun.entity.Post" table="sss_post">
+		 <!-- 主键生成方式 -->
+		 <id name="id" column="id" type="java.lang.Long">
+			 <generator class="native">
+			 </generator>
+		 </id>
+		 <!-- 普通字段生成方式 -->
+		 <property name="name" type="java.lang.String" column="name"/>
+		 <property name="description" type="java.lang.String" column="description"/>
+		 <set name="users" table="sss_user_post">
+		 	<key>
+		 		<column name="postId"></column>
+		 	</key>
+		 	<many-to-many class="com.sun.entity.User" column="userId"></many-to-many>
+		 </set>
+		 <set name="privileges" table="sss_post_privilege" lazy="false">
+		 	<key>
+		 		<column name="postId"></column>
+		 	</key>
+		 	<many-to-many class="com.sun.entity.Privilege" column="privilegeId"/>
+		 </set>
+	</class>
+</hibernate-mapping>

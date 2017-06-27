@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	
+	<class name="com.sun.entity.Topic" table="sss_topic">
+		 <!-- 主键生成方式 -->
+		 	 <id name="id" column="id" type="java.lang.Long">
+			 <generator class="native"></generator>
+		 </id>
+		 <!-- 普通字段生成方式 -->
+		 <property name="title" type="java.lang.String" column="title"/>
+		 <property name="content" type="text" length="50000" column="content"/>
+		 <property name="faceIcon" type="java.lang.String" column="faceIcon"/>
+		 <property name="ipAddr" type="java.lang.String" column="ipAddr"/>
+		 <property name="postTime" type="timestamp" column="postTime"/>
+
+		 <property name="type" type="java.lang.Integer" column="type"/>
+		 <property name="replyCount" type="java.lang.Integer" column="replyCount"/>
+		 <property name="lastUpdateTime" type="timestamp" column="lastUpdateTime"/>
+		 	
+				
+		 <many-to-one name="lastReply" class="com.sun.entity.Reply" column="lastReplyId" unique="true"/>					
+		 <many-to-one name="forum" class="com.sun.entity.Forum" column="forumId"/>
+		 <many-to-one name="author" class="com.sun.entity.User" column="authorId"/>
+		 <set name="replies">
+		 	<key>
+		 		<column name="topicId"></column>
+		 	</key>
+		 	<one-to-many class="com.sun.entity.Reply"/>
+		 </set>
+		 			 
+	</class>
+	
+</hibernate-mapping>

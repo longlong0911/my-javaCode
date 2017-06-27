@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	
+	<class name="com.sun.entity.Department" table="sss_department">
+		 <!-- 主键生成方式 -->
+		 <id name="id" column="id" type="java.lang.Long">
+			 <generator class="native">
+			 </generator>
+		 </id>
+		 <!-- 普通字段生成方式 -->
+		 <property name="name" type="java.lang.String" column="name"/>
+		 <property name="description" type="java.lang.String" column="description"/>
+		 
+		 <set name="users">
+		 	<key>
+		 		<column name="departmentId"></column>
+		 	</key>
+		 	<one-to-many class="com.sun.entity.User"/>
+		 </set>
+		
+		<many-to-one name="parent" class="com.sun.entity.Department" column="parentId"/>
+		<set name="children" cascade="delete" order-by="id" >
+			<key>
+				<column name="parentId"></column>
+			</key>
+			<one-to-many class="com.sun.entity.Department"/>
+		</set>			 
+	</class>
+	
+</hibernate-mapping>

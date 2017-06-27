@@ -1,0 +1,82 @@
+<?xml  version="1.0"  encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+		<!-- 配置为开发模式 -->
+    <constant name="struts.devMode" value="true" />
+	<!-- 配置扩展名为action -->
+    <constant name="struts.action.extension" value="action" />
+    <!-- 配置主题 -->
+    <constant name="struts.ui.theme" value="simple" />
+		
+		
+		
+	<package name="action" namespace="/" extends="json-default">
+		<interceptors>
+			<interceptor name="checkPrivilegeInterceptor" class="com.sun.interceptor.CheckPrivilegeInterceptor"></interceptor>		
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="checkPrivilegeInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="errorPrivilege">/WEB-INF/jsp/user/errorPrivilege.jsp</result>
+			<result name="loginUI">/WEB-INF/jsp/user/loginUI.jsp</result>
+			
+		</global-results>
+		
+		<action name="postAction_*" class="postAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/post/list.jsp</result>
+			<result name="toList" type="redirectAction">postAction_list</result>
+			<result name="addUI">/WEB-INF/jsp/post/addUI.jsp</result>
+			<result name="setPrivilegeUI">/WEB-INF/jsp/post/setPrivilegeUI.jsp</result>
+		</action>
+		<action name="departmentAction_*" class="departmentAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/department/list.jsp</result>
+			<result name="toList" type="redirectAction">departmentAction_list</result>
+			<result name="addUI">/WEB-INF/jsp/department/addUI.jsp</result>
+		</action>
+		<action name="userAction_*" class="userAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/user/list.jsp</result>
+			<result name="toList" type="redirectAction">userAction_list</result>
+			<result name="addUI">/WEB-INF/jsp/user/addUI.jsp</result>
+			<result name="toAllUI" type = "redirectAction">homeAction_allUI</result>
+			<result name="check" type = "json">
+				<param name="root">info</param>
+			</result>
+			
+		</action>
+		<action name="homeAction_*" class="homeAction" method="{1}">
+			<result name="{1}">/WEB-INF/jsp/home/{1}.jsp</result>
+		</action>
+		<!-- 论坛管理版块 -->
+		<action name="forumManagerAction_*" class="forumManagerAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/forumManager/list.jsp</result>
+			<result name="toList" type="redirectAction">forumManagerAction_list</result>
+			<result name="addUI">/WEB-INF/jsp/forumManager/addUI.jsp</result>
+			<result name="updateUI">/WEB-INF/jsp/forumManager/addUI.jsp</result>
+		</action>
+		<!-- 论坛相关版块 -->
+		<action name="forumAction_*" class="forumAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/forum/list.jsp</result>
+			<result name="show">/WEB-INF/jsp/forum/show.jsp</result>
+		</action>
+		
+		<!-- 主题相关版块 -->
+		<action name="topicAction_*" class="topicAction" method="{1}">
+			<result name="show">/WEB-INF/jsp/topic/show.jsp</result>
+			<result name="addUI">/WEB-INF/jsp/topic/addUI.jsp</result>
+			<result name="toShow" type="redirectAction">topicAction_show?id=${id}</result>			
+		</action>
+		<!-- 回复相关版块 -->
+
+		<action name="replyAction_*" class="replyAction" method="{1}">
+			<result name="addUI">/WEB-INF/jsp/reply/addUI.jsp</result>
+			<result name="toTopicShow" type="redirectAction">topicAction_show?id=${topicId}</result>			
+		</action>	
+			
+	</package>	
+</struts>
