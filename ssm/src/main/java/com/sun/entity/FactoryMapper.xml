@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sun.dao.FactoryMapper" >
+  <resultMap id="BaseResultMap" type="com.sun.entity.Factory" >
+    <id column="FACTORY_ID" property="id" jdbcType="VARCHAR" />
+    <result column="FULL_NAME" property="fullName" jdbcType="VARCHAR" />
+    <result column="FACTORY_NAME" property="factoryName" jdbcType="VARCHAR" />
+    <result column="CONTACTS" property="contacts" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="FOX" property="fox" jdbcType="VARCHAR" />
+    <result column="INSPECTOR" property="inspector" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="DECIMAL" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="DECIMAL" />
+    <result column="CNOTE" property="cnote" jdbcType="VARCHAR" />
+    <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+    <result column="CREATE_DEPT" property="createDept" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FACTORY_ID, FULL_NAME, FACTORY_NAME, CONTACTS, PHONE, MOBILE, FOX, INSPECTOR, STATE, 
+    ORDER_NO, CNOTE, CREATE_BY, CREATE_DEPT, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from FACTORY_C
+    where FACTORY_ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  	
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from FACTORY_C
+    where FACTORY_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sun.entity.Factory" >
+    insert into FACTORY_C (FACTORY_ID, FULL_NAME, FACTORY_NAME, 
+      CONTACTS, PHONE, MOBILE, 
+      FOX, INSPECTOR, STATE, 
+      ORDER_NO, CNOTE, CREATE_BY, 
+      CREATE_DEPT, CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, #{factoryName,jdbcType=VARCHAR}, 
+      #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{fox,jdbcType=VARCHAR}, #{inspector,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}, 
+      #{orderNo,jdbcType=DECIMAL}, #{cnote,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createDept,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sun.entity.Factory" >
+    insert into FACTORY_C
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        FACTORY_ID,
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME,
+      </if>
+      <if test="factoryName != null" >
+        FACTORY_NAME,
+      </if>
+      <if test="contacts != null" >
+        CONTACTS,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="fox != null" >
+        FOX,
+      </if>
+      <if test="inspector != null" >
+        INSPECTOR,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="cnote != null" >
+        CNOTE,
+      </if>
+      <if test="createBy != null" >
+        CREATE_BY,
+      </if>
+      <if test="createDept != null" >
+        CREATE_DEPT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="fox != null" >
+        #{fox,jdbcType=VARCHAR},
+      </if>
+      <if test="inspector != null" >
+        #{inspector,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=DECIMAL},
+      </if>
+      <if test="cnote != null" >
+        #{cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDept != null" >
+        #{createDept,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sun.entity.Factory" >
+    update FACTORY_C
+    <set >
+      <if test="fullName != null" >
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryName != null" >
+        FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        CONTACTS = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="fox != null" >
+        FOX = #{fox,jdbcType=VARCHAR},
+      </if>
+      <if test="inspector != null" >
+        INSPECTOR = #{inspector,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=DECIMAL},
+      </if>
+      <if test="cnote != null" >
+        CNOTE = #{cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDept != null" >
+        CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FACTORY_ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sun.entity.Factory" >
+    update FACTORY_C
+    set FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
+      CONTACTS = #{contacts,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      FOX = #{fox,jdbcType=VARCHAR},
+      INSPECTOR = #{inspector,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      ORDER_NO = #{orderNo,jdbcType=DECIMAL},
+      CNOTE = #{cnote,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where FACTORY_ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="getAll" resultMap="BaseResultMap">
+    select *  from FACTORY_C
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from FACTORY_C
+    where FACTORY_ID in
+    <foreach collection="array" open="(" close=")" item="id" separator=",">
+    	#{id}
+    </foreach>
+  </delete>
+  
+</mapper>

@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sun.dao.ContractMapper">
+	<resultMap id="BaseResultMap" type="com.sun.entity.Contract">
+		<id column="CONTRACT_ID" property="id" jdbcType="VARCHAR" />
+		<result column="OFFEROR" property="offeror" jdbcType="VARCHAR" />
+		<result column="CONTRACT_NO" property="contractNo" jdbcType="VARCHAR" />
+		<result column="SIGNING_DATE" property="signingDate" jdbcType="TIMESTAMP" />
+		<result column="INPUT_BY" property="inputBy" jdbcType="VARCHAR" />
+		<result column="CHECK_BY" property="checkBy" jdbcType="VARCHAR" />
+		<result column="INSPECTOR" property="inspector" jdbcType="VARCHAR" />
+		<result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="DECIMAL" />
+		<result column="IMPORT_NUM" property="importNum" jdbcType="DECIMAL" />
+		<result column="CREQUEST" property="crequest" jdbcType="VARCHAR" />
+		<result column="CUSTOM_NAME" property="customName" jdbcType="VARCHAR" />
+		<result column="DELIVERY_PERIOD" property="deliveryPeriod"
+			jdbcType="TIMESTAMP" />
+		<result column="SHIP_TIME" property="shipTime" jdbcType="TIMESTAMP" />
+		<result column="TRADE_TERNS" property="tradeTerns" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="PRINT_STYLE" property="printStyle" jdbcType="CHAR" />
+		<result column="OLD_STATE" property="oldState" jdbcType="DECIMAL" />
+		<result column="STATE" property="state" jdbcType="DECIMAL" />
+		<result column="OUT_STATE" property="outState" jdbcType="DECIMAL" />
+		<result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+		<result column="CREATE_DEPT" property="createDept" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		
+	</resultMap>
+
+	<resultMap id="contractVORM" type="com.sun.vo.ContractVO" extends="BaseResultMap">
+		<!-- 一对多用collections -->
+		<collection property="contractProducts" ofType="com.sun.vo.ContractProductVO">
+			<id column="CONTRACT_PRODUCT_ID" property="id" jdbcType="VARCHAR" />
+			<result column="CONTRACT_ID" property="contractId" jdbcType="VARCHAR" />
+			<result column="FACTORY_ID" property="factoryId" jdbcType="VARCHAR" />
+			<result column="FACTORY_NAME" property="factoryName" jdbcType="VARCHAR" />
+			<result column="PRODUCT_NO" property="productNo" jdbcType="VARCHAR" />
+			<result column="PRODUCT_IMAGE" property="productImage"
+				jdbcType="VARCHAR" />
+			<result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+			<result column="CNUMBER" property="cnumber" jdbcType="DECIMAL" />
+			<result column="OUT_NUMBER" property="outNumber" jdbcType="DECIMAL" />
+			<result column="LOADING_RATE" property="loadingRate" jdbcType="VARCHAR" />
+			<result column="BOX_NUM" property="boxNum" jdbcType="DECIMAL" />
+			<result column="PACKING_UNIT" property="packingUnit" jdbcType="VARCHAR" />
+			<result column="PRICE" property="price" jdbcType="DECIMAL" />
+			<result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+			<result column="FINISHED" property="finished" jdbcType="DECIMAL" />
+			<result column="EXTS" property="exts" jdbcType="VARCHAR" />
+			<result column="ORDER_NO" property="orderNo" jdbcType="DECIMAL" />
+			
+			
+			<!-- 多对一用association -->
+			<association property="factory" javaType="com.sun.entity.Factory">
+				<id column="FACTORY_ID" property="id" jdbcType="VARCHAR" />
+				<result column="FULL_NAME" property="fullName" jdbcType="VARCHAR" />
+				<result column="FACTORY_NAME" property="factoryName"
+					jdbcType="VARCHAR" />
+				<result column="CONTACTS" property="contacts" jdbcType="VARCHAR" />
+				<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+			</association>
+			
+			<collection property="extCproducts" ofType="com.sun.vo.ExtCproductVO">
+				<id column="EXT_EXT_CPRODUCT_ID" property="id" jdbcType="VARCHAR" />
+				<result column="EXT_FACTORY_ID" property="factoryId" jdbcType="VARCHAR" />
+				<result column="EXT_CONTRACT_PRODUCT_ID" property="contractProductId"
+					jdbcType="VARCHAR" />
+				<result column="EXT_FACTORY_NAME" property="factoryName"
+					jdbcType="VARCHAR" />
+				<result column="EXT_CTYPE" property="ctype" jdbcType="DECIMAL" />
+				<result column="EXT_PRODUCT_NO" property="productNo" jdbcType="VARCHAR" />
+				<result column="EXT_PRODUCT_IMAGE" property="productImage"
+					jdbcType="VARCHAR" />
+				<result column="EXT_PRODUCT_DESC" property="productDesc"
+					jdbcType="VARCHAR" />
+				<result column="EXT_CNUMBER" property="cnumber" jdbcType="DECIMAL" />
+				<result column="EXT_PACKING_UNIT" property="packingUnit"
+					jdbcType="VARCHAR" />
+				<result column="EXT_PRICE" property="price" jdbcType="DECIMAL" />
+				<result column="EXT_AMOUNT" property="amount" jdbcType="DECIMAL" />
+				<result column="EXT_PRODUCT_REQUEST" property="productRequest"
+					jdbcType="VARCHAR" />
+				<result column="EXT_ORDER_NO" property="orderNo" jdbcType="DECIMAL" />
+
+
+					<!-- 多对一用association -->
+				<association property="factory" javaType="com.sun.entity.Factory">
+					<id column="EXT_FACTORY_ID" property="id" jdbcType="VARCHAR" />
+					<result column="EXT_FULL_NAME" property="fullName" jdbcType="VARCHAR" />
+					<result column="EXT_FACTORY_NAME" property="factoryName"
+						jdbcType="VARCHAR" />
+					<result column="EXT_CONTACTS" property="contacts" jdbcType="VARCHAR" />
+					<result column="EXT_PHONE" property="phone" jdbcType="VARCHAR" />
+	
+				</association>
+				
+			</collection>
+		</collection>
+	</resultMap>
+	
+		
+	
+	<sql id="Base_Column_List">
+		CONTRACT_ID, OFFEROR, CONTRACT_NO, SIGNING_DATE, INPUT_BY,
+		CHECK_BY, INSPECTOR,
+		TOTAL_AMOUNT,
+		IMPORT_NUM, CREQUEST, CUSTOM_NAME,
+		DELIVERY_PERIOD, SHIP_TIME, TRADE_TERNS,
+		REMARK,
+		PRINT_STYLE, OLD_STATE,
+		STATE, OUT_STATE, CREATE_BY, CREATE_DEPT, CREATE_TIME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from CONTRACT_C
+		where CONTRACT_ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		CONTRACT_C
+		where CONTRACT_ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.sun.entity.Contract">
+		insert into CONTRACT_C
+		(CONTRACT_ID, OFFEROR, CONTRACT_NO,
+		SIGNING_DATE, INPUT_BY, CHECK_BY,
+		INSPECTOR, TOTAL_AMOUNT, IMPORT_NUM,
+		CREQUEST, CUSTOM_NAME,
+		DELIVERY_PERIOD,
+		SHIP_TIME, TRADE_TERNS, REMARK,
+		PRINT_STYLE, OLD_STATE,
+		STATE,
+		OUT_STATE, CREATE_BY, CREATE_DEPT,
+		CREATE_TIME)
+		values
+		(#{id,jdbcType=VARCHAR}, #{offeror,jdbcType=VARCHAR},
+		#{contractNo,jdbcType=VARCHAR},
+		#{signingDate,jdbcType=TIMESTAMP},
+		#{inputBy,jdbcType=VARCHAR}, #{checkBy,jdbcType=VARCHAR},
+		#{inspector,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL},
+		#{importNum,jdbcType=DECIMAL},
+		#{crequest,jdbcType=VARCHAR},
+		#{customName,jdbcType=VARCHAR}, #{deliveryPeriod,jdbcType=TIMESTAMP},
+		#{shipTime,jdbcType=TIMESTAMP}, #{tradeTerns,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{printStyle,jdbcType=CHAR},
+		#{oldState,jdbcType=DECIMAL}, #{state,jdbcType=DECIMAL},
+		#{outState,jdbcType=DECIMAL}, #{createBy,jdbcType=VARCHAR},
+		#{createDept,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.sun.entity.Contract">
+		insert into CONTRACT_C
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				CONTRACT_ID,
+			</if>
+			<if test="offeror != null">
+				OFFEROR,
+			</if>
+			<if test="contractNo != null">
+				CONTRACT_NO,
+			</if>
+			<if test="signingDate != null">
+				SIGNING_DATE,
+			</if>
+			<if test="inputBy != null">
+				INPUT_BY,
+			</if>
+			<if test="checkBy != null">
+				CHECK_BY,
+			</if>
+			<if test="inspector != null">
+				INSPECTOR,
+			</if>
+			<if test="totalAmount != null">
+				TOTAL_AMOUNT,
+			</if>
+			<if test="importNum != null">
+				IMPORT_NUM,
+			</if>
+			<if test="crequest != null">
+				CREQUEST,
+			</if>
+			<if test="customName != null">
+				CUSTOM_NAME,
+			</if>
+			<if test="deliveryPeriod != null">
+				DELIVERY_PERIOD,
+			</if>
+			<if test="shipTime != null">
+				SHIP_TIME,
+			</if>
+			<if test="tradeTerns != null">
+				TRADE_TERNS,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="printStyle != null">
+				PRINT_STYLE,
+			</if>
+			<if test="oldState != null">
+				OLD_STATE,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="outState != null">
+				OUT_STATE,
+			</if>
+			<if test="createBy != null">
+				CREATE_BY,
+			</if>
+			<if test="createDept != null">
+				CREATE_DEPT,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="offeror != null">
+				#{offeror,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNo != null">
+				#{contractNo,jdbcType=VARCHAR},
+			</if>
+			<if test="signingDate != null">
+				#{signingDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inputBy != null">
+				#{inputBy,jdbcType=VARCHAR},
+			</if>
+			<if test="checkBy != null">
+				#{checkBy,jdbcType=VARCHAR},
+			</if>
+			<if test="inspector != null">
+				#{inspector,jdbcType=VARCHAR},
+			</if>
+			<if test="totalAmount != null">
+				#{totalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="importNum != null">
+				#{importNum,jdbcType=DECIMAL},
+			</if>
+			<if test="crequest != null">
+				#{crequest,jdbcType=VARCHAR},
+			</if>
+			<if test="customName != null">
+				#{customName,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryPeriod != null">
+				#{deliveryPeriod,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shipTime != null">
+				#{shipTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tradeTerns != null">
+				#{tradeTerns,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="printStyle != null">
+				#{printStyle,jdbcType=CHAR},
+			</if>
+			<if test="oldState != null">
+				#{oldState,jdbcType=DECIMAL},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=DECIMAL},
+			</if>
+			<if test="outState != null">
+				#{outState,jdbcType=DECIMAL},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDept != null">
+				#{createDept,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.sun.entity.Contract">
+		update CONTRACT_C
+		<set>
+			<if test="offeror != null">
+				OFFEROR = #{offeror,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNo != null">
+				CONTRACT_NO = #{contractNo,jdbcType=VARCHAR},
+			</if>
+			<if test="signingDate != null">
+				SIGNING_DATE = #{signingDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inputBy != null">
+				INPUT_BY = #{inputBy,jdbcType=VARCHAR},
+			</if>
+			<if test="checkBy != null">
+				CHECK_BY = #{checkBy,jdbcType=VARCHAR},
+			</if>
+			<if test="inspector != null">
+				INSPECTOR = #{inspector,jdbcType=VARCHAR},
+			</if>
+			<if test="totalAmount != null">
+				TOTAL_AMOUNT = #{totalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="importNum != null">
+				IMPORT_NUM = #{importNum,jdbcType=DECIMAL},
+			</if>
+			<if test="crequest != null">
+				CREQUEST = #{crequest,jdbcType=VARCHAR},
+			</if>
+			<if test="customName != null">
+				CUSTOM_NAME = #{customName,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryPeriod != null">
+				DELIVERY_PERIOD = #{deliveryPeriod,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shipTime != null">
+				SHIP_TIME = #{shipTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tradeTerns != null">
+				TRADE_TERNS = #{tradeTerns,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="printStyle != null">
+				PRINT_STYLE = #{printStyle,jdbcType=CHAR},
+			</if>
+			<if test="oldState != null">
+				OLD_STATE = #{oldState,jdbcType=DECIMAL},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=DECIMAL},
+			</if>
+			<if test="outState != null">
+				OUT_STATE = #{outState,jdbcType=DECIMAL},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDept != null">
+				CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where CONTRACT_ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.sun.entity.Contract">
+		update CONTRACT_C
+		set OFFEROR = #{offeror,jdbcType=VARCHAR},
+		CONTRACT_NO =
+		#{contractNo,jdbcType=VARCHAR},
+		SIGNING_DATE =
+		#{signingDate,jdbcType=TIMESTAMP},
+		INPUT_BY =
+		#{inputBy,jdbcType=VARCHAR},
+		CHECK_BY = #{checkBy,jdbcType=VARCHAR},
+		INSPECTOR = #{inspector,jdbcType=VARCHAR},
+		TOTAL_AMOUNT =
+		#{totalAmount,jdbcType=DECIMAL},
+		IMPORT_NUM =
+		#{importNum,jdbcType=DECIMAL},
+		CREQUEST = #{crequest,jdbcType=VARCHAR},
+		CUSTOM_NAME = #{customName,jdbcType=VARCHAR},
+		DELIVERY_PERIOD =
+		#{deliveryPeriod,jdbcType=TIMESTAMP},
+		SHIP_TIME =
+		#{shipTime,jdbcType=TIMESTAMP},
+		TRADE_TERNS =
+		#{tradeTerns,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR},
+		PRINT_STYLE = #{printStyle,jdbcType=CHAR},
+		OLD_STATE =
+		#{oldState,jdbcType=DECIMAL},
+		STATE = #{state,jdbcType=DECIMAL},
+		OUT_STATE = #{outState,jdbcType=DECIMAL},
+		CREATE_BY =
+		#{createBy,jdbcType=VARCHAR},
+		CREATE_DEPT =
+		#{createDept,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP}
+		where CONTRACT_ID =
+		#{id,jdbcType=VARCHAR}
+	</update>
+
+
+
+	<select id="getAll" resultMap="BaseResultMap">
+		SELECT 
+		    (SELECT COUNT(*) FROM contract_product_c  WHERE contract_id=cc.contract_id) as cpCount,
+		    (select count(*) from ext_cproduct_c where contract_product_id in 
+		    	(select contract_product_id from contract_product_c where contract_id = cc.contract_id)) as extCount,
+		    cc.*
+		     FROM 
+		contract_c cc
+	</select>
+	<delete id="delete" parameterType="java.lang.String">
+		delete from CONTRACT_C
+		where CONTRACT_ID in
+		<foreach collection="array" open="(" close=")" item="id"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	<update id="updateState" parameterType="map">
+		update CONTRACT_C set STATE = #{state} where CONTRACT_ID in
+		<foreach collection="ids" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</update>
+	
+	
+	
+	<select id="selectView" parameterType="string" resultMap="contractVORM">
+		  
+ select
+	pp.CONTRACT_ID,pp. OFFEROR,pp. CONTRACT_NO,pp. SIGNING_DATE,pp. INPUT_BY,pp.
+	CHECK_BY,pp. INSPECTOR,pp.
+	TOTAL_AMOUNT,pp.
+	IMPORT_NUM,pp. CREQUEST,pp. CUSTOM_NAME,pp.
+	DELIVERY_PERIOD,pp. SHIP_TIME,pp. TRADE_TERNS,pp.
+	REMARK,pp.
+	PRINT_STYLE,pp. OLD_STATE,pp.
+	STATE,pp. OUT_STATE,pp. CREATE_BY,pp. CREATE_DEPT,pp. CREATE_TIME,
+    
+      pp.CONTRACT_PRODUCT_ID,pp. FACTORY_ID,pp. 
+      FACTORY_NAME,pp. PRODUCT_NO,pp. PRODUCT_IMAGE,pp. 
+      PRODUCT_DESC,pp. CNUMBER,pp. OUT_NUMBER,pp. 
+      LOADING_RATE,pp. BOX_NUM,pp. PACKING_UNIT,pp. 
+      PRICE,pp. AMOUNT,pp. FINISHED,pp. EXTS,pp. ORDER_NO,		
+      pp.FULL_NAME,pp.CONTACTS,pp.PHONE,
+	
+    e.EXT_CPRODUCT_ID as EXT_EXT_CPRODUCT_ID  , e.FACTORY_ID as EXT_FACTORY_ID  ,e. CONTRACT_PRODUCT_ID as EXT_CONTRACT_PRODUCT_ID  , e.FACTORY_NAME as EXT_FACTORY_NAME  ,e. CTYPE as EXT_CTYPE  ,e. PRODUCT_NO as EXT_PRODUCT_NO  ,e. 
+    PRODUCT_IMAGE as EXT_PRODUCT_IMAGE  ,e. PRODUCT_DESC as EXT_PRODUCT_DESC  ,e. CNUMBER as EXT_CNUMBER  ,e. PACKING_UNIT as EXT_PACKING_UNIT  ,e. PRICE as EXT_PRICE  ,e. AMOUNT as EXT_AMOUNT  ,e. PRODUCT_REQUEST as EXT_PRODUCT_REQUEST  ,e. 
+    ORDER_NO as EXT_ORDER_NO  ,
+    e.FULL_NAME as EXT_FULL_NAME  ,e.CONTACTS as EXT_CONTACTS  ,e.PHONE as EXT_PHONE
+		 
+    from    
+  (
+  select 
+	pp.CONTRACT_ID,pp. OFFEROR,pp. CONTRACT_NO,pp. SIGNING_DATE,pp. INPUT_BY,pp.
+	CHECK_BY,pp. INSPECTOR,pp.
+	TOTAL_AMOUNT,pp.
+	IMPORT_NUM,pp. CREQUEST,pp. CUSTOM_NAME,pp.
+	DELIVERY_PERIOD,pp. SHIP_TIME,pp. TRADE_TERNS,pp.
+	REMARK,pp.
+	PRINT_STYLE,pp. OLD_STATE,pp.
+	STATE,pp. OUT_STATE,pp. CREATE_BY,pp. CREATE_DEPT,pp. CREATE_TIME,
+    
+      cp.CONTRACT_PRODUCT_ID,cp. FACTORY_ID,cp. 
+      FACTORY_NAME,cp. PRODUCT_NO,cp. PRODUCT_IMAGE,cp. 
+      PRODUCT_DESC,cp. CNUMBER,cp. OUT_NUMBER,cp. 
+      LOADING_RATE,cp. BOX_NUM,cp. PACKING_UNIT,cp. 
+      PRICE,cp. AMOUNT,cp. FINISHED,cp. EXTS,cp. ORDER_NO,		
+      
+      cp.FULL_NAME,cp.CONTACTS,cp.PHONE
+    
+    
+  from
+  
+  (select 
+   	    CONTRACT_ID, OFFEROR, CONTRACT_NO, SIGNING_DATE, INPUT_BY,
+		CHECK_BY, INSPECTOR,
+		TOTAL_AMOUNT,
+		IMPORT_NUM, CREQUEST, CUSTOM_NAME,
+		DELIVERY_PERIOD, SHIP_TIME, TRADE_TERNS,
+		REMARK,
+		PRINT_STYLE, OLD_STATE,
+		STATE, OUT_STATE, CREATE_BY, CREATE_DEPT, CREATE_TIME
+	from contract_c)pp
+ 
+ 		
+ 
+ 
+  
+      left join
+  (select 
+      cp.CONTRACT_PRODUCT_ID,cp. CONTRACT_ID,cp. FACTORY_ID,cp. 
+      FACTORY_NAME,cp. PRODUCT_NO,cp. PRODUCT_IMAGE,cp. 
+      PRODUCT_DESC,cp. CNUMBER,cp. OUT_NUMBER,cp. 
+      LOADING_RATE,cp. BOX_NUM,cp. PACKING_UNIT,cp. 
+      PRICE,cp. AMOUNT,cp. FINISHED,cp. EXTS,cp. ORDER_NO,		
+      f.FULL_NAME,f.CONTACTS,f.PHONE
+	from
+	  (	select 
+	      CONTRACT_PRODUCT_ID, CONTRACT_ID, FACTORY_ID, 
+	      FACTORY_NAME, PRODUCT_NO, PRODUCT_IMAGE, 
+	      PRODUCT_DESC, CNUMBER, OUT_NUMBER, 
+	      LOADING_RATE, BOX_NUM, PACKING_UNIT, 
+	      PRICE, AMOUNT, FINISHED, EXTS, ORDER_NO									
+		 from contract_product_c
+			)cp
+				left join 	
+		(select 
+		FACTORY_ID,FULL_NAME,FACTORY_NAME,CONTACTS,PHONE
+		from factory_c)f
+		on 
+	    cp.FACTORY_ID=f.FACTORY_ID)cp
+	    on pp.CONTRACT_ID=cp.CONTRACT_ID)pp
+	  
+	  
+	  left join    
+	  
+	  
+	  (
+	    select 
+	    e.EXT_CPRODUCT_ID, e.FACTORY_ID,e. CONTRACT_PRODUCT_ID, e.FACTORY_NAME,e. CTYPE,e. PRODUCT_NO,e. 
+	    PRODUCT_IMAGE,e. PRODUCT_DESC,e. CNUMBER,e. PACKING_UNIT,e. PRICE,e. AMOUNT,e. PRODUCT_REQUEST,e. 
+	    ORDER_NO,
+	    f.FULL_NAME,f.CONTACTS,f.PHONE
+	  from 
+	  (select 
+	    EXT_CPRODUCT_ID, FACTORY_ID, CONTRACT_PRODUCT_ID, FACTORY_NAME, CTYPE, PRODUCT_NO, 
+	    PRODUCT_IMAGE, PRODUCT_DESC, CNUMBER, PACKING_UNIT, PRICE, AMOUNT, PRODUCT_REQUEST, 
+	    ORDER_NO
+	  from 
+	    ext_cproduct_c  )e
+	  left join
+	  （select 
+	    FACTORY_ID,FULL_NAME,FACTORY_NAME,CONTACTS,PHONE
+	  from factory_c）f
+	  on e.FACTORY_ID=f.FACTORY_ID
+	  )e
+	  on pp.CONTRACT_PRODUCT_ID=e. CONTRACT_PRODUCT_ID
+			where CONTRACT_ID = #{id,jdbcType=VARCHAR} 	
+	</select>
+	<delete id="deleteByContractId" parameterType="string">
+		delete 
+		from 
+			CONTRACT_C
+		where 
+			CONTRACT_ID= #{id,jdbcType=VARCHAR}
+	</delete>	
+	
+</mapper>
